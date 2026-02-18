@@ -1,0 +1,26 @@
+name: sgdfuse
+channels:
+  - pytorch
+  - nvidia
+  - defaults
+  - conda-forge
+dependencies:
+  - python=3.9
+  - pip=23.3
+  - pytorch>=2.0.0
+  - torchvision
+  - pytorch-cuda=11.8
+  - numpy>=1.24.0
+  - scipy
+  - matplotlib
+  - pillow
+  - opencv
+  - tqdm
+  - pyyaml
+  - pip:
+      - segment-anything
+      - einops
+      - scikit-image
+      - lpips
+      - ultralytics
+      - timm
