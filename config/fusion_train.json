@@ -1,127 +1,68 @@
 {
-    "name": "ddpm-FSHead",
+    "name": "SGDFuse_Stage2_MSRS",
     "phase": "train",
-    "gpu_ids": [
-        0
-    ],
+    "gpu_ids": [0],
     "path": {
         "log": "logs",
         "tb_logger": "tb_logger",
         "results": "results",
-        "checkpoint": "null",
-        "resume_state": "Path_DF_Model"
+        "checkpoint": "checkpoints",
+        "resume_state": null 
     },
-
-    "path_df": {
-        "log": "logs",
-        "tb_logger": "tb_logger",
-        "results": "results",
-        "checkpoint": "checkpoint",
-        "resume_state": null
-    },
-
     "datasets": {
         "train": {
             "name": "MSRS",
-            "dataroot": "Path_DATASET",
             "resolution": 160,
-            "batch_size": 1,
-            "num_workers": 6,
-            "use_shuffle": true,
-            "data_len": -1
+            "batch_size": 24,
+            "num_workers": 4,
+            "use_shuffle": true
         },
         "val": {
-            "name": "MSRS",
-            "dataroot": "Path_DATASET",
+            "name": "MSRS_Val",
             "resolution": 160,
-            "batch_size": 1,
-            "num_workers": 1,
-            "use_shuffle": true,
-            "data_len": -1
-        },
-        "test": {
-            "name": "MSRS",
-            "dataroot": "Path_DATASET",
-            "resolution": 160,
-            "batch_size": 1,
-            "num_workers": 1,
-            "use_shuffle": false,
-            "data_len": -1
+            "image_size_w": 160,
+            "image_size_h": 160,
+            "data_len": 4
         }
     },
-
-    "model_df": {
-        "feat_scales": [2, 5, 8, 11, 14],
-        "out_channels": 4,
-        "loss_type": "ce",
-        "output_cm_size": 160,
-        "psp": true,
-        "feat_type": "dec",
-        "t": [5, 50, 100]
-    },
-
     "model": {
-        "which_model_G": "sr3",
-        "finetune_norm": false,
+        "which_model_G": "ddpm",
         "unet": {
-            "in_channel": 4,
-            "out_channel": 4,
-            "inner_channel": 128,
-            "channel_multiplier": [
-                1,
-                2,
-                4,
-                8,
-                8
-            ],
-            "attn_res": [
-                16
-            ],
+            "in_channel": 5,
+            "out_channel": 3,
+            "inner_channel": 64,
+            "channel_multiplier": [1, 2, 4, 8],
+            "attn_res": [16],
             "res_blocks": 2,
             "dropout": 0.2
         },
         "beta_schedule": {
             "train": {
                 "schedule": "linear",
-                "n_timestep": 2000,
+                "n_timestep": 1000,
                 "linear_start": 1e-6,
                 "linear_end": 1e-2
             },
             "val": {
                 "schedule": "linear",
-                "n_timestep": 2000,
-                "linear_start": 1e-6,
-                "linear_end": 1e-2
-            },
-            "test": {
-                "schedule": "linear",
-                "n_timestep": 2000,
+                "n_timestep": 60,
                 "linear_start": 1e-6,
                 "linear_end": 1e-2
             }
-        },
-        "diffusion": {
-            "image_size": 160,
-            "channels": 4,
-            "loss": "l2",
-            "is_concat": false,
-            "conditional": false
         }
     },
-    
     "train": {
-        "n_epoch": 300,
-        "train_print_freq": 50,
-        "val_freq": 1,
-        "val_print_freq": 50,
+        "n_iter": 200000,
         "optimizer": {
             "type": "adam",
             "lr": 1e-4
         },
-        "sheduler": {
-            "lr_policy": "linear",  // options: linear, poly, step
-            "n_steps": 3,           //this is aplicable only if step sheduler using
-            "gamma": 0.1            //Multiplicative factor of learning rate decay. Default: 0.1.
-        }
+        "loss_weights": {
+            "lambda_intensity": 1.5,
+            "lambda_gradient": 1.0
+        },
+        "val_freq": 5000,
+        "save_checkpoint_freq": 10000,
+        "print_freq": 200
     }
 }
