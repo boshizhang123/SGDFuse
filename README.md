@@ -2,7 +2,6 @@
 
 [![Paper](https://img.shields.io/badge/Paper-Information%20Fusion-blue)](你的论文链接)
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.0+-red)](https://pytorch.org/)
-[![License](https://img.shields.io/badge/License-MIT-green)](LICENSE)
 
 ## 🛠️ 环境配置 (Environment)
 
