@@ -1,8 +1,5 @@
 # SGDFuse: SAM-Guided Diffusion for High-Fidelity Infrared and Visible Image Fusion
 
-[![Paper](https://img.shields.io/badge/Paper-Information%20Fusion-blue)](你的论文链接)
-[![PyTorch](https://img.shields.io/badge/PyTorch-2.0+-red)](https://pytorch.org/)
-
 ## 🛠️ 环境配置 (Environment)
 
 * **硬件**: NVIDIA RTX 4090 (推荐显存 >= 24GB)
