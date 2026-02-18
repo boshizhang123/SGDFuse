@@ -8,3 +8,5 @@
   ```bash
   conda env create -f environment.yaml
   conda activate sgdfuse
+
+[Coming Soon] Pre-trained checkpoints for all IVIF and Medical datasets will be released shortly.
